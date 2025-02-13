@@ -31,13 +31,13 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         self.preview_slide()
 
     def preview_slide(self):
-        cmd = f"open {self.output_html}"
+        cmd = f"start {self.output_html}"
         try:
             os.system(cmd)
         except:
             # system other than unix-like ones
             try:
-                cmd = f"start {self.output_html}"
+                cmd = f"open {self.output_html}"
                 os.system(cmd)
             except:
                 pass # do nothing if cannot open slide correctly
@@ -48,7 +48,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         with open(self.temp_md_fname, 'w') as f:
             f.write(self.md_content)
         cmd = f"""
-        /usr/local/bin/pandoc -t revealjs \
+        pandoc -t revealjs \
         --standalone -i\
     --variable theme={self.config["revealjs_theme"]} \
     --variable transition={self.config["revealjs_transition"]} \
